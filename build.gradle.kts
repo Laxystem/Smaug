@@ -7,8 +7,8 @@ plugins {
 	java
 	`maven-publish`
 
-	alias(libs.plugins.kotlin)
-	alias(libs.plugins.quilt.loom)
+	kotlin("jvm")
+	id("org.quiltmc.loom")
 }
 
 val archives_base_name: String by project
@@ -16,51 +16,36 @@ base.archivesName.set(archives_base_name)
 
 val javaVersion = 17
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-}
+val loader: String by project
+val mappings: String by project
+val minecraft: String by project
+val qfapi: String by project
+val qkl: String by project
 
-// All the dependencies are declared at gradle/libs.version.toml and referenced with "libs.<id>"
-// See https://docs.gradle.org/current/userguide/platforms.html for information on how version catalogs work.
 dependencies {
-	minecraft(libs.minecraft)
-	mappings(
-		variantOf(libs.quilt.mappings) {
-			classifier("intermediary-v2")
-		}
-	)
+	minecraft("com.mojang:minecraft:$minecraft")
 
-	// Replace the above line with the block below if you want to use Mojang mappings as your primary mappings, falling back on QM for parameters and Javadocs
-	/*
+	@Suppress("UnstableApiUsage")
 	mappings(
 		loom.layered {
-			mappings(variantOf(libs.quilt.mappings) { classifier("intermediary-v2") })
 			officialMojangMappings()
+			mappings("org.quiltmc:quilt-mappings:$minecraft+build.$mappings:intermediary-v2")
 		}
 	)
-	*/
 
-	modImplementation(libs.quilt.loader)
-
-
-	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
-	// Quilted Fabric API will automatically pull in the correct QSL version.
-	modImplementation(libs.qfapi)
-	// modImplementation(libs.bundles.qfapi) // If you wish to use the deprecated Fabric API modules
-
-	modImplementation(libs.qkl)
+	modImplementation("org.quiltmc:quilt-loader:$loader")
+	modImplementation("org.quiltmc.quilted-fabric-api:quilted-fabric-api:$qfapi")
+	modImplementation("org.quiltmc.quilt-kotlin-libraries:quilt-kotlin-libraries:$qkl")
 }
 
 tasks {
 	withType<KotlinCompile> {
 		kotlinOptions {
 			jvmTarget = javaVersion.toString()
+
+			val kotlin: String by project
 			// languageVersion: A.B of the kotlin plugin version A.B.C
-			languageVersion = libs.plugins.kotlin.get().version.requiredVersion.substringBeforeLast('.')
+			languageVersion = kotlin.substringBeforeLast('.')
 		}
 	}
 

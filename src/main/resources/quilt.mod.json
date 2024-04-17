@@ -1,27 +1,27 @@
 {
 	"schema_version": 1,
 	"quilt_loader": {
-		"group": "com.example",
-		"id": "example_mod",
+		"group": "quest.laxla",
+		"id": "smaug",
 		"version": "${version}",
 		"metadata": {
-			"name": "Mod Name",
-			"description": "A short description of your mod.",
+			"name": "Smaug",
+			"description": "Improving rails to Gandalf's express-train-like dragon firework's standards.",
 			"contributors": {
-				"Your name here": "Owner"
+				"Laxystem": "Author"
 			},
 			"contact": {
-				"homepage": "https://example.com/",
-				"issues": "https://github.com/QuiltMC/quilt-kotlin-template-mod/issues",
-				"sources": "https://github.com/QuiltMC/quilt-kotlin-template-mod"
+				"issues": "https://github.com/Laxystem/Smaug/issues",
+				"sources": "https://github.com/Laxystem/Smaug/issues"
 			},
-			"icon": "assets/example_mod/icon.png"
+			"icon": "assets/smaug/icon.png",
+			"license": "MPL-2.0"
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
 			"init": {
 				"adapter": "kotlin",
-				"value": "com.example.example_mod.ExampleMod"
+				"value": "quest.laxla.smaug.Smaug"
 			}
 		},
 		"depends": [
@@ -43,5 +43,5 @@
 			}
 		]
 	},
-	"mixin": "example_mod.mixins.json"
+	"mixin": "smaug.mixins.json"
 }

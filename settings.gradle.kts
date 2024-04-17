@@ -1,18 +1,24 @@
+rootProject.name = "Smaug"
+
 pluginManagement {
 	repositories {
-		maven {
+		maven(url = "https://maven.quiltmc.org/repository/release") {
 			name = "Quilt"
-			url = uri("https://maven.quiltmc.org/repository/release")
 		}
-		// Currently needed for Intermediary and other temporary dependencies
-		maven {
+
+		maven(url = "https://maven.fabricmc.net/") {
 			name = "Fabric"
-			url = uri("https://maven.fabricmc.net/")
 		}
 
 		gradlePluginPortal()
 		mavenCentral()
 	}
-}
 
-rootProject.name = "quilt-kotlin-template-mod"
+	plugins {
+		val kotlin: String by settings
+		val loom: String by settings
+
+		kotlin("jvm") version kotlin apply false
+		id("org.quiltmc.loom") version loom apply false
+	}
+}
