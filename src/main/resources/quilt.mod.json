@@ -43,5 +43,10 @@
 			}
 		]
 	},
-	"mixin": "smaug.mixins.json"
+	"mixin": "smaug.mixins.json",
+	"quilt_loom": {
+		"injected_interfaces": {
+			"net/minecraft/class_2241": [ "quest/laxla/smaug/Rail" ]
+		}
+	}
 }

@@ -38,6 +38,11 @@ dependencies {
 	modImplementation("org.quiltmc.quilt-kotlin-libraries:quilt-kotlin-libraries:$qkl")
 }
 
+configurations.all {
+	exclude(group = "net.fabricmc", module = "fabric-loader")
+	exclude(group = "net.fabricmc.fabric-api")
+}
+
 tasks {
 	withType<KotlinCompile> {
 		kotlinOptions {
@@ -46,6 +51,9 @@ tasks {
 			val kotlin: String by project
 			// languageVersion: A.B of the kotlin plugin version A.B.C
 			languageVersion = kotlin.substringBeforeLast('.')
+
+			freeCompilerArgs += "-Xjvm-default=all"
+			freeCompilerArgs += "-Xextended-compiler-checks"
 		}
 	}
 
